@@ -1,0 +1,147 @@
+PGDMP                     	    {         
+   SistemaCarros    13.2    13.2     ×           0    0    ENCODING    ENCODING        SET client_encoding = 'UTF8';
+                      false            Ø           0    0 
+   STDSTRINGS 
+   STDSTRINGS     (   SET standard_conforming_strings = 'on';
+                      false            Ù           0    0 
+   SEARCHPATH 
+   SEARCHPATH     8   SELECT pg_catalog.set_config('search_path', '', false);
+                      false            Ú           1262    57988 
+   SistemaCarros    DATABASE     o   CREATE DATABASE "SistemaCarros" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'Portuguese_Brazil.1252';
+    DROP DATABASE "SistemaCarros";
+                postgres    false            É            1259    57994    clientes    TABLE     ™   CREATE TABLE public.clientes (
+    id integer NOT NULL,
+    nome character varying(40) NOT NULL,
+    idestado integer NOT NULL,
+    sexo character(1)
+);
+    DROP TABLE public.clientes;
+       public         heap    postgres    false            È            1259    57989    estado    TABLE     a   CREATE TABLE public.estado (
+    id integer NOT NULL,
+    nome character varying(50) NOT NULL
+);
+    DROP TABLE public.estado;
+       public         heap    postgres    false            Ê            1259    58012 
+   fabricante    TABLE     \   CREATE TABLE public.fabricante (
+    id integer NOT NULL,
+    nome character varying(20)
+);
+    DROP TABLE public.fabricante;
+       public         heap    postgres    false            Î            1259    58097 
+   itensvendidos    TABLE     Ÿ   CREATE TABLE public.itensvendidos (
+    id integer NOT NULL,
+    idvenda integer NOT NULL,
+    idveiculo integer NOT NULL,
+    qtdevendida integer NOT NULL
+);
+ !   DROP TABLE public.itensvendidos;
+       public         heap    postgres    false            Ì            1259    58067    modelo    TABLE     „   CREATE TABLE public.modelo (
+    id integer NOT NULL,
+    idfabricante integer NOT NULL,
+    nome character varying(50) NOT NULL
+);
+    DROP TABLE public.modelo;
+       public         heap    postgres    false            Í            1259    58077    veiculos    TABLE     •   CREATE TABLE public.veiculos (
+    id integer NOT NULL,
+    idmodelo integer NOT NULL,
+    ano integer NOT NULL,
+    preco numeric(10,2) NOT NULL
+);
+    DROP TABLE public.veiculos;
+       public         heap    postgres    false            Ë            1259    58057    venda    TABLE     »   CREATE TABLE public.venda (
+    id integer NOT NULL,
+    idcliente integer NOT NULL,
+    descricao character varying(50) NOT NULL,
+    datavenda date NOT NULL,
+    status character(1)
+);
+    DROP TABLE public.venda;
+       public         heap    postgres    false            Ï          0    57994    clientes 
+   TABLE DATA           <   COPY public.clientes (id, nome, idestado, sexo) FROM stdin;
+    public          postgres    false    201   ‘"       Î          0    57989    estado 
+   TABLE DATA           *   COPY public.estado (id, nome) FROM stdin;
+    public          postgres    false    200   #       Ð          0    58012 
+   fabricante 
+   TABLE DATA           .   COPY public.fabricante (id, nome) FROM stdin;
+    public          postgres    false    202   ‚$       Ô          0    58097 
+   itensvendidos 
+   TABLE DATA           L   COPY public.itensvendidos (id, idvenda, idveiculo, qtdevendida) FROM stdin;
+    public          postgres    false    206   Å$       Ò          0    58067    modelo 
+   TABLE DATA           8   COPY public.modelo (id, idfabricante, nome) FROM stdin;
+    public          postgres    false    204   ;%       Ó          0    58077    veiculos 
+   TABLE DATA           <   COPY public.veiculos (id, idmodelo, ano, preco) FROM stdin;
+    public          postgres    false    205   5'       Ñ          0    58057    venda 
+   TABLE DATA           L   COPY public.venda (id, idcliente, descricao, datavenda, status) FROM stdin;
+    public          postgres    false    203   *       ;           2606    57998    clientes clientes_pkey 
+   CONSTRAINT     T   ALTER TABLE ONLY public.clientes
+    ADD CONSTRAINT clientes_pkey PRIMARY KEY (id);
+ @   ALTER TABLE ONLY public.clientes DROP CONSTRAINT clientes_pkey;
+       public            postgres    false    201            9           2606    57993    estado estado_pkey 
+   CONSTRAINT     P   ALTER TABLE ONLY public.estado
+    ADD CONSTRAINT estado_pkey PRIMARY KEY (id);
+ <   ALTER TABLE ONLY public.estado DROP CONSTRAINT estado_pkey;
+       public            postgres    false    200            =           2606    58016    fabricante fabricante_pkey 
+   CONSTRAINT     X   ALTER TABLE ONLY public.fabricante
+    ADD CONSTRAINT fabricante_pkey PRIMARY KEY (id);
+ D   ALTER TABLE ONLY public.fabricante DROP CONSTRAINT fabricante_pkey;
+       public            postgres    false    202            E           2606    58101     itensvendidos itensvendidos_pkey 
+   CONSTRAINT     ^   ALTER TABLE ONLY public.itensvendidos
+    ADD CONSTRAINT itensvendidos_pkey PRIMARY KEY (id);
+ J   ALTER TABLE ONLY public.itensvendidos DROP CONSTRAINT itensvendidos_pkey;
+       public            postgres    false    206            A           2606    58071    modelo modelo_pkey 
+   CONSTRAINT     P   ALTER TABLE ONLY public.modelo
+    ADD CONSTRAINT modelo_pkey PRIMARY KEY (id);
+ <   ALTER TABLE ONLY public.modelo DROP CONSTRAINT modelo_pkey;
+       public            postgres    false    204            C           2606    58081    veiculos veiculos_pkey 
+   CONSTRAINT     T   ALTER TABLE ONLY public.veiculos
+    ADD CONSTRAINT veiculos_pkey PRIMARY KEY (id);
+ @   ALTER TABLE ONLY public.veiculos DROP CONSTRAINT veiculos_pkey;
+       public            postgres    false    205            ?           2606    58061    venda venda_pkey 
+   CONSTRAINT     N   ALTER TABLE ONLY public.venda
+    ADD CONSTRAINT venda_pkey PRIMARY KEY (id);
+ :   ALTER TABLE ONLY public.venda DROP CONSTRAINT venda_pkey;
+       public            postgres    false    203            F           2606    57999    clientes clientes_idestado_fkey 
+   FK CONSTRAINT     €   ALTER TABLE ONLY public.clientes
+    ADD CONSTRAINT clientes_idestado_fkey FOREIGN KEY (idestado) REFERENCES public.estado(id);
+ I   ALTER TABLE ONLY public.clientes DROP CONSTRAINT clientes_idestado_fkey;
+       public          postgres    false    2873    200    201            K           2606    58107 *   itensvendidos itensvendidos_idveiculo_fkey 
+   FK CONSTRAINT     Ž   ALTER TABLE ONLY public.itensvendidos
+    ADD CONSTRAINT itensvendidos_idveiculo_fkey FOREIGN KEY (idveiculo) REFERENCES public.veiculos(id);
+ T   ALTER TABLE ONLY public.itensvendidos DROP CONSTRAINT itensvendidos_idveiculo_fkey;
+       public          postgres    false    206    2883    205            J           2606    58102 (   itensvendidos itensvendidos_idvenda_fkey 
+   FK CONSTRAINT     ‡   ALTER TABLE ONLY public.itensvendidos
+    ADD CONSTRAINT itensvendidos_idvenda_fkey FOREIGN KEY (idvenda) REFERENCES public.venda(id);
+ R   ALTER TABLE ONLY public.itensvendidos DROP CONSTRAINT itensvendidos_idvenda_fkey;
+       public          postgres    false    2879    206    203            H           2606    58072    modelo modelo_idfabricante_fkey 
+   FK CONSTRAINT     ˆ   ALTER TABLE ONLY public.modelo
+    ADD CONSTRAINT modelo_idfabricante_fkey FOREIGN KEY (idfabricante) REFERENCES public.fabricante(id);
+ I   ALTER TABLE ONLY public.modelo DROP CONSTRAINT modelo_idfabricante_fkey;
+       public          postgres    false    204    202    2877            I           2606    58082    veiculos veiculos_idmodelo_fkey 
+   FK CONSTRAINT     €   ALTER TABLE ONLY public.veiculos
+    ADD CONSTRAINT veiculos_idmodelo_fkey FOREIGN KEY (idmodelo) REFERENCES public.modelo(id);
+ I   ALTER TABLE ONLY public.veiculos DROP CONSTRAINT veiculos_idmodelo_fkey;
+       public          postgres    false    2881    205    204            G           2606    58062    venda venda_idcliente_fkey 
+   FK CONSTRAINT     ~   ALTER TABLE ONLY public.venda
+    ADD CONSTRAINT venda_idcliente_fkey FOREIGN KEY (idcliente) REFERENCES public.clientes(id);
+ D   ALTER TABLE ONLY public.venda DROP CONSTRAINT venda_idcliente_fkey;
+       public          postgres    false    203    2875    201            Ï   x   xœ-Ì»
+Ã0…áùèaJäÜ×<”ä
+]D0Tà\ˆã¥O…vÓ‡~c”}Z\‘Jy’î
+•½ŽOÈ	©Q·ð[õß9rÝ<ÕxÈ¬Qàž9ª,.=îAŽ]¿plä/I³.×¢§÷ˆN«¢!Ó      Î   Y  xœ]Q½nÂ0œ??EÆx©ˆùC€¨¨¡QÂØå,°6rÈÒ·AÙúy±žÓ©],ÝÝçûÎç„Òƒ×QœfR(J/|rÜ ¾I1¤ôÊ·îTJ1
+èÓÙ^-¤Ó‚Ï†£x‘J1¡L³£ÙJŠ)-Ms÷æî¢µ>jÏ—(^®¥˜Ñª¹uÏ^¨ÙâŒWµsÊéðÍß¥HT°g{î¾ 0O0Î½kšÀíÀ©?Ü†-¶°K†T˜3Çf×" 9¢ò7`Çq÷Ü#¹ 1é	ÛTÀS*µ·|Ý· l,ñ¨dF¥á¶{¾Î©2X¬£
+[m<¦ª
+*ôt/HˆµuþŽz«-´äŸÖG®Y)ªœ=vß6Z¡5ƒø×€H(4ÆQÆwöx^×áÇÆT‡žJn/HPãŸÔ„jíOæ†­5r«)íÜwE;x¼!~ ùÑ’˜      Ð   3   xœ3ätËL,á2âtË/Já2æôÈÏKIä2áôJM-à2åôË,.NÌãŠÑãââ ö—
+ð      Ô   f   xœ%ÍÁÃ0Á7®˜ŒAJ¶ÓKú¯#„=§'µ°<¥Ô´Òb)™­'N¥âRjn¥ÅWÉøÐû61hã’Ã.ÜràÂ£†ž»- ŸÏ§~î.9swË™eüŒlêP=#Íïü×õs      Ò   ê  xœm’Ûn£0†¯ñSÌ”ÄÆÐä2åF%%Â9­´7,x[«#
+QÇ@iZíEˆäùæÿçD-j­ÒuÔžƒw„¨”WÂðñ¡É.„ñ#Pñš8ðÓä9øêÀbä9> úO©á±çð^«>nM\ŒFJ7ªÒ°SùÛÝ¡6nÄ³˜æZÔºiŸ`ö|f>C¦±Äì{CëDƒc»pô€q4Æ„U×Údq+#öIºí5Œ B]")ùÑfSW}|+sÛ˜Ñ¹tÞ}€EVõJHÍÆÿæ£¥–cù›ý¯Ï1Êº_åO 3 º¨Ü6Äçx†?l©ÖÄ›2uŽTÁyRÓ•çaB9"§ôîøÍò\]¤v,»B‚P„z·üd»[	qò¼ÞìA8ëÊ¾ª’ï^7YU€ÿ*ý&%Äê]µ²À-x˜ÁÍ&vl*+ù’§~¦¯ÿ¨.‘<¡êK)›‘tD%º\æÂæ·À¡*GËOÔë×¿àùÅœ#£–kE®ZeäÀúºžæþ\´,‡¡2†äÓÆ ¾¯þsZÌAb»JýÇŸDÔ¡
+ ãHì²öõ¯ª
+ãBÜ]õíQ2î˜&\…¬Ú&ÿ8ë^mÈo›òÆëé°      Ó   Õ  xœM•É‘%1DÏúÆt bõeü·cIwüë+‰%Q|øqsQþ!úÈ¡cÅE\>nQúˆ‚È	’¸Ø‘&D§,ü àÃÄ9—¤ãsñœIŽ¯ÂùH‹rBÍ'9Ó ®Ç+³1 ùB÷è‹žç
+Å´Æ
+T_È½,eáˆ’›
+Šc‡«ô$ÇÊ	b§<p­@ü<
+‰Ö ÅÔ"n~§dPW D6ÁåuÌ	¤@rô²Ù	 «6Èú~]Ò%€ô„%ü”êâHûË°:ùXž¤„—€úK»<¨Ë
+ã¯ Ñ1±î=…*n¦á*NG@ÔÜ®vµI˜´ûÄC—7ïÆÏe÷ES°Z¦ÇDl”UZfÇôŠë:wâK…0ÍÖmU$ÚÒ»ìõ2º©.{çÙ¯E”µOj_‡/kÿ¢ñbY»•¿wsYÛE.¨¹û¸0ÂÓ$æmÑ²÷,BÆVc°®9¢à¾É²vIú{k
+öÉkº¬5ðLÄ30¡ñÌ—Aäè>f¨;W9.–Ë:9k»VË:€M<§e½,Œk†Ì;¶£>f¿`²¬cÈÍÉëìÕ'©Ó‡ë2ž2úy'øn)øæ¾Ì_Í…»±,^Í„¼¹¬µâÀYZïïlÞ`°7/œ‚å&Ë¸gˆö\×\XA#ºìéÃØa`üôqßÂ—=}/&^q˜qéõs¹¬5íGƒµ¬ÅqAIË:FPÍÝìaÞ·À¦5¥€==.Öô]öúV?R—ÍÜÑ9»YýTrjI_öô+ÆÝ {úÝRÜÍe­_jé>î.UìÁ¢eÚ´ÆËz•ùÜíùó÷.cú}ó©ø]
+ÌýÌ'~B½0±íß|ëmåL£A¯u°Î
+z±÷ÆºlÓoå²ÞC½ÏQ_-ë=d†yáþUúé?/Ìü÷óù|þ0S?‹      Ñ     xœu’Mnƒ0…×ãSô©<6¿ËªÛ¬²Î†G²ÙNÔëp‡Þ€‹ÅVhÆ	Eb÷}â½ ƒ€ðÝXk>NfÐÞ€àBîï„„/–A¶Ðîús5.Á<àŠ·Ý<9§[°
+rÏCWƒW$dQ „Þœ•’ÄÌ!_øMY7O^wOƒ×Ñ¨¡ÞHàyà"©pizÝéÆ’;·ó4ês2RÀžQÕšaþí_VÖÁ¨ ÚÚPL×Â¾=Cjð_D,%”%y9uXÿ
+[Hn4Öë[²áÀ(aõ™Bú!>Oeý”Ñ Œ÷sÁ˜€t/oÇÆ«€ŸŒ±;úñ¬1     
