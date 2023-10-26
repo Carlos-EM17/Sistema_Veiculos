@@ -1,0 +1,262 @@
+/*------------Cliente-----------*/
+CREATE TABLE Clientes (
+    ID INT NOT NULL PRIMARY KEY,
+    Nome VARCHAR (40) NOT NULL,
+	idEstado integer not null,
+	foreign key (idEstado) references estado (id)
+);
+
+create table estado (
+	id integer primary key not null,
+	nome varchar(20) not null
+)
+
+alter table estado alter column nome type varchar(50); 
+/*--------------Veiculos----------------*/
+CREATE TABLE Veiculos (
+    ID INTeger NOT NULL PRIMARY KEY,
+ 	idmodelo integer not null,
+	ano int not null,
+	preco decimal (7,2) not null,
+	foreign key(idmodelo) references modelo(id)
+);
+
+alter table veiculos alter column preco type numeric(10, 2)
+
+create table modelo (
+	id integer primary key not null,
+	idfabricante integer not null,
+	nome varchar(50) not null,
+	foreign key (idfabricante) references fabricante(id)
+)
+	
+create table fabricante (
+	id integer primary key not null,
+	nome varchar(20)
+)	
+
+/*----------------Vendas-----------------*/
+
+CREATE TABLE Venda(
+    ID INT NOT NULL PRIMARY KEY,
+	idCliente integer not null,
+	descricao varchar(50) not null,
+    DataVenda DATE NOT NULL,
+	foreign key (idCliente) references Clientes(id)
+);
+
+CREATE TABLE ItensVendidos (
+	id integer primary key not null,
+    IDVenda INTeger NOT NULL,
+    IDVeiculo INT NOT NULL,
+    QtdeVendida int NOT NULL,
+    FOREIGN KEY (IDVenda) REFERENCES Venda (ID),
+    FOREIGN KEY (idveiculo) REFERENCES Veiculos (Id)
+);
+
+	
+/*Insert's*/	
+
+select v.preco, m.nome from Veiculos v, modelo m
+where v.idmodelo = m.id
+order by preco desc
+limit 1//Funcionou
+
+select min(preco), m.nome from Veiculos v, modelo m
+where v.idmodelo = m.id
+group by preco, nome
+order by v.preco /*Fiorino*/
+
+select v.preco, m.nome from Veiculos v, modelo m
+where v.idmodelo = m.id
+group by v.preco, m.nome
+having preco >= 100000
+
+
+select avg(preco) from Veiculos /*45048*/
+
+select count (distinct nome) from Modelo /*25*/
+
+select sum(preco) from Veiculos
+where id between 1 and 2
+
+
+INSERT INTO estado (id, nome) VALUES
+    (1, 'Acre (AC)'),
+    (2, 'Alagoas (AL)'),
+    (3, 'Amapá (AP)'),
+    (4, 'Amazonas (AM)'),
+    (5, 'Bahia (BA)'),
+    (6, 'Ceará (CE)'),
+    (7, 'Distrito Federal (DF)'),
+    (8, 'Espírito Santo (ES)'),
+    (9, 'Goiás (GO)'),
+    (10, 'Maranhão (MA)'),
+    (11, 'Mato Grosso (MT)'),
+    (12, 'Mato Grosso do Sul (MS)'),
+    (13, 'Minas Gerais (MG)'),
+    (14, 'Pará (PA)'),
+    (15, 'Paraíba (PB)'),
+    (16, 'Paraná (PR)'),
+    (17, 'Pernambuco (PE)'),
+    (18, 'Piauí (PI)'),
+    (19, 'Rio de Janeiro (RJ)'),
+    (20, 'Rio Grande do Norte (RN)'),
+    (21, 'Rio Grande do Sul (RS)'),
+    (22, 'Rondônia (RO)'),
+    (23, 'Roraima (RR)'),
+    (24, 'Santa Catarina (SC)'),
+    (25, 'São Paulo (SP)'),
+    (26, 'Sergipe (SE)'),
+    (27, 'Tocantins (TO)');
+	
+INSERT INTO Clientes (id, nome, idEstado) VALUES 
+(1, 'Marcos', 25),
+(2, 'Lais', 14),
+(3, 'Lucas', 19),
+(4, 'Matheus', 8),
+(5, 'Camila', 2),
+(6, 'Felipe', 25),
+(7, 'Luis', 19),
+(8, 'Juliana', 13),
+(9, 'Beatriz', 21),
+(10, 'Yasmin', 25);
+
+insert into fabricante (id, nome) values 
+(1, 'Fiat'),
+(2, 'Ford'),
+(3, 'Honda'),
+(4, 'Jeep'),
+(5, 'Nissan');
+
+INSERT INTO modelo (id, idfabricante, nome) values 
+(1, 1, 'ARGO 1.0 6V Flex'),
+(2, 1, 'Brava ELX 1.6 16V 4p'),
+(3, 1, 'CRONOS 1.3 8V Flex'),
+(4, 1, 'Doblo HLX 1.8 mpi Flex 5p'),
+(5, 1, 'Fiorino Pick-Up 1.0'),
+(6, 2, 'EcoSport 4WD 2.0/ 2.0 Flex 16V 5p'),
+(7, 2, 'EDGE SEL 3.5 V6 24V FWD Aut.'),
+(8, 2, 'EcoSport STORM 2.0 4WD 16V Flex 5p Aut.'),
+(9, 2, 'Fiesta 1.6 16V Flex Mec. 5p'),
+(10, 2, 'Focus Sedan 2.0 16V/2.0 16V Flex 4p Aut.'),
+(11, 3, 'CITY Sedan EXL 1.5 Flex 16V 4p Aut.'),
+(12, 3, 'Civic Sed. LXL/LXL SE 1.8 Flex 16V Mec.'),
+(13, 3, 'Fit DX 1.5 Flexone 16V 5p Mec'),
+(14, 3, 'WR-V EXL 1.5 Flexone 16V 5p Aut.'),
+(15, 3, 'Prelude Si'),
+(16, 4, 'COMPASS LONGITUDE 2.0 4x2 Flex 16V Aut.'),
+(17, 4, 'Grand Cherokee Limited 3.6 4x4 V6 Aut.'),
+(18, 4, 'Renegade Sport 1.8 4x2 Flex 16V Aut.'),
+(19, 4, 'Wrangler Sport 3.8 V6 199cv'),
+(20, 4, 'Wrangler Unlimited Sport 3.6 V6 284cv 4p'),
+(21, 5, 'Frontier S CD 4x4 2.3 TB Diesel Mec.'),
+(22, 5, 'KICKS S 1.6 16V Flex 5p Aut.'),
+(23, 5, 'MARCH S 1.6 16V Flex Fuel 5p'),
+(24, 5, 'Pathfinder SE Luxo 3.5 V6 24V 243cv'),
+(25, 5, 'Sentra SL 2.0/ 2.0 Flex Fuel 16V Aut.');
+
+delete from modelo where id != 0	
+
+update
+
+INSERT INTO Veiculos (ID, idmodelo, ano, Preco) VALUES 
+(1, 1, 2019, '56241.00'),
+(2, 1, 2020, '59190.00'),
+(3, 1, 2021, '65794.00'),
+(4, 1, 2022, '70273.00'),
+(5, 2, 2000, '9576.00'),
+(6, 2, 2001, '10184.00'),
+(7, 2, 2002, '11916.00'),
+(8, 2, 2003, '14218.00'),
+(9, 3, 2019, '74560.00'),
+(10, 3, 2020, '69889.00'),
+(11, 3, 2021, '74560.00'),
+(12, 3, 2022, '74560.00'),
+(13, 4, 2008, '32071.00'),
+(14, 4, 2009, '32071.00'),
+(15, 4, 2010, '39539.00'),
+(16, 4, 2011, '40655.00'),
+(17, 5, 1994, '8178.00'),
+(18, 5, 1995, '9679.00'),
+(19, 5, 1996, '9679.00'),
+(20, 5, 1997, '10591.00'),
+(21, 6, 2009, '36319.00'),
+(22, 6, 2010, '40058.00'),
+(23, 6, 2011, '41188.00'),
+(24, 6, 2012, '43148.00'),
+(25, 7, 2012, '59631.00'),
+(26, 7, 2013, '69345.00'),
+(27, 7, 2014, '75890.00'),
+(28, 7, 2015, '104014.00'),
+(29, 8, 2018, '80818.00'),
+(30, 8, 2019, '87516.00'),
+(31, 8, 2020, '89743.00'),
+(32, 8, 2021, '10174.00'),
+(33, 9, 2013, '37076.00'),
+(34, 9, 2014, '41186.00'),
+(35, 9, 2015, '43693.00'),
+(36, 9, 2016, '48094.00'),
+(37, 10, 2012, '38374.00'),
+(38, 10, 2013, '41144.00'),
+(39, 10, 2014, '52259.00'),
+(40, 10, 2015, '54322.00'),
+(41, 11, 2019, '94204.00'),
+(42, 11, 2020, '97843.00'),
+(43, 11, 2021, '10720.00'),
+(44, 11, 2022, '11152.00'),
+(45, 12, 2010, '42994.00'),
+(46, 12, 2011, '47923.00'),
+(47, 12, 2012, '58152.00'),
+(48, 12, 2013, '60629.00'),
+(49, 13, 2018, '68527.00'),
+(50, 13, 2019, '74725.00'),
+(51, 13, 2020, '77931.00'),
+(52, 13, 2021, '82957.00'),
+(53, 14, 2018, '87162.00'),
+(54, 14, 2019, '96885.00'),
+(55, 14, 2020, '10175.00'),
+(56, 14, 2021, '10721.00'),
+(57, 15, 1992, '19600.00'),
+(58, 15, 1993, '21496.00'),
+(59, 15, 1994, '24505.00'),
+(60, 15, 1995, '25198.00'),
+(61, 16, 2018, '11638.00'),
+(62, 16, 2019, '12381.00'),
+(63, 16, 2020, '12842.00'),
+(64, 16, 2021, '14219.00'),
+(65, 17, 2015, '12920.00'),
+(66, 17, 2016, '19692.00'),
+(67, 17, 2017, '21408.00'),
+(68, 17, 2018, '81809.00'),
+(70, 18, 2019, '87842.00'),
+(71, 18, 2020, '91824.00'),
+(72, 18, 2021, '97042.00'),
+(73, 19, 2008, '14093.00'),
+(74, 19, 2009, '15179.00'),
+(75, 19, 2010, '15607.00'),
+(76, 19, 2011, '16786.00'),
+(77, 20, 2014, '23637.00'),
+(78, 20, 2015, '24803.00'),
+(79, 20, 2016, '26209.00'),
+(80, 20, 2017, '27097.00'),
+(81, 21, 2019, '15495.00'),
+(82, 21, 2020, '16736.00'),
+(83, 21, 2021, '18451.00'),
+(84, 21, 2022, '19630.00'),
+(85, 22, 2018, '84283.00'),
+(86, 22, 2019, '87911.00'),
+(87, 22, 2020, '93940.00'),
+(88, 22, 2021, '99935.00'),
+(89, 23, 2013, '34488.00'),
+(90, 23, 2014, '36480.00'),
+(91, 23, 2015, '40565.00'),
+(92, 23, 2016, '42977.00'),
+(93, 24, 2002, '30785.00'),
+(94, 24, 2003, '34555.00'),
+(95, 24, 2004, '46106.00'),
+(96, 24, 2005, '47407.00'),
+(97, 25, 2013, '43153.00'),
+(98, 25, 2014, '54000.00'),
+(99, 25, 2015, '55524.00'),
+(100, 25, 2016, '62437.00');
